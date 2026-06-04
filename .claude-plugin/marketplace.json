@@ -1,0 +1,10 @@
+{
+  "name": "refactor-preview",
+  "displayName": "Refactor Preview",
+  "description": "Simulate refactoring impact with blast radius analysis before applying changes. See exactly what would break before you touch a line.",
+  "keywords": ["refactoring", "static-analysis", "impact", "call-graph", "safety"],
+  "category": "developer-tools",
+  "license": "MIT",
+  "repository": "https://github.com/mturac/refactor-preview",
+  "icon": "🔬"
+}

@@ -1,0 +1,59 @@
+name: Validate Plugin Structure
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check plugin.json exists
+        run: test -f .claude-plugin/plugin.json
+
+      - name: Check marketplace.json exists
+        run: test -f .claude-plugin/marketplace.json
+
+      - name: Validate plugin.json schema
+        run: |
+          node -e "
+            const p = require('./.claude-plugin/plugin.json');
+            if (!p.name) throw new Error('missing name');
+            if (!p.version) throw new Error('missing version');
+            if (!Array.isArray(p.skills)) throw new Error('skills must be array');
+            if (!Array.isArray(p.commands)) throw new Error('commands must be array');
+            console.log('plugin.json OK');
+          "
+
+      - name: Check all skill SKILL.md files exist
+        run: |
+          node -e "
+            const p = require('./.claude-plugin/plugin.json');
+            const fs = require('fs');
+            p.skills.forEach(s => {
+              const path = s + '/SKILL.md';
+              if (!fs.existsSync(path)) throw new Error('Missing: ' + path);
+              console.log('OK:', path);
+            });
+          "
+
+      - name: Check all command files exist
+        run: |
+          node -e "
+            const p = require('./.claude-plugin/plugin.json');
+            const fs = require('fs');
+            p.commands.forEach(c => {
+              if (!fs.existsSync(c)) throw new Error('Missing: ' + c);
+              console.log('OK:', c);
+            });
+          "
+
+      - name: Check README exists
+        run: test -f README.md
+
+      - name: All checks passed
+        run: echo "Plugin structure valid."

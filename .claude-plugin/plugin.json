@@ -1,0 +1,19 @@
+{
+  "name": "refactor-preview",
+  "version": "0.1.0",
+  "description": "Simulate refactoring impact with blast radius analysis before applying changes — show what would break.",
+  "author": {
+    "name": "mturac"
+  },
+  "skills": [
+    "skills/blast-radius",
+    "skills/refactor-plan",
+    "skills/refactor-validate"
+  ],
+  "commands": [
+    "commands/refactor-preview.md",
+    "commands/refactor-blast.md",
+    "commands/refactor-plan.md",
+    "commands/refactor-validate.md"
+  ]
+}
